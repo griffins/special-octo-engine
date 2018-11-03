@@ -50,7 +50,7 @@ let request = make request()
 limit = request.reponse.window_limit
 remaining = request.reponse.remaing
 
-  repeat until 6 times:
+repeat until 6 times:
   // fill up all slots
   for each remaining slots:
     make request()
@@ -61,8 +61,8 @@ remaining = request.reponse.remaing
     if we succedded:
       time for one slot = response.time - time/(limit - reponse.remaining)
       break
-  end repeat
-  time_frame = sum of all slot times / repeat times
+end repeat
+time_frame = sum of all slot times / repeat times
 
 ```
 Now once we have this we have enough information for the rate limiter to work properly
