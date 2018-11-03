@@ -66,3 +66,7 @@ time_frame = sum of all slot times / repeat times
 
 ```
 Now once we have this we have enough information for the rate limiter to work properly
+
+Ofcourse this can be improved by taking into account things lik network latencies to increase the accuracy of time slot used to calculate the time frames for the rate limiter.
+
+Also we have the problem of droping all requests before the rate limiter initializes, solving that would make for a better limiter.
