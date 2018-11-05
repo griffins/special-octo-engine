@@ -28,9 +28,11 @@ Easy:  use two variables to keep track of :
 1. The maximum number of requests in a time window.
 2. The number of requests we are remaining with.
 
+When rate limiting we would need to allow only a given number of request in the given time frame, once the time frame is over we simply reset the number of remaining requests.
+
 Problem: Do we consider a slot is taken when we are queuing the request after its response has been received, each of this methods has pros and cons.
 
-The idea I have is dropping all requests till the rate limiter has learned of the time frame for our sliding window and the limit for the window.
+The idea I had was dropping all requests till the rate limiter has learned of the time frame for our window and the limit for the window.
 
 First, we only send one request to get the rate limiter config before we start now doing parallel requests. After obtaining the limit and remaining attempts we fire a burst of requests to make sure all the slots are taken.
 
@@ -42,6 +44,7 @@ And we can now start letting request through our rate limiter
 
 Inform of an algorithm that can be represented as below.
 ```
+let sample_rate = 6
 let limit = 0
 let time_frame =0 
 let remaining = 0
@@ -50,7 +53,7 @@ let request = make request()
 limit = request.reponse.window_limit
 remaining = request.reponse.remaing
 
-repeat until 6 times:
+repeat until sample_rate:
   // fill up all slots
   for each remaining slots:
     make request()
@@ -69,4 +72,6 @@ Now once we have this we have enough information for the rate limiter to work pr
 
 Ofcourse this can be improved by taking into account things lik network latencies to increase the accuracy of time slot used to calculate the time frames for the rate limiter.
 
-Also we have the problem of droping all requests before the rate limiter initializes, solving that would make for a better limiter.
+Also we have the problem of dropping all requests before the rate limiter initializes, solving that would make for a better limiter.
+
+In this case the window time discovered by the rate limiter was about 8-10 seconds.
