@@ -75,3 +75,10 @@ Ofcourse this can be improved by taking into account things lik network latencie
 Also we have the problem of dropping all requests before the rate limiter initializes, solving that would make for a better limiter.
 
 In this case the window time discovered by the rate limiter was about 8-10 seconds.
+
+## Install
+
+1. Just clone the repo install and the dependencies via yarn or npm
+2. run ```node app.js```
+
+Happy hacking
